@@ -1,0 +1,29 @@
+Reinforcement Learning
+
+Aprender com a interação com o ambiente. Recebe-se feedback do ambiente. Para escolher a melhor ação: melhor valor esperado fazendo muitos samplings (testando varias vezes e calculando uma média aproximada do valor de recompensa daquela ação). O numero de amostragens interessa para a confirmação da exploração. Selecting greedy actions: exploiting (tirar proveito daquilo que já se sabe). Criar diferentes amostras: exploration.
+
+Action Selection: 
+- greedy (A = argmax Qt(a))
+- e-greedy: greedily most of the time, mas com pouca probabilidadade (e), seleciona randomicamente among as açoes
+- softmax
+
+* No geral temos muitos estados. MDP é a formalização da tomada de decisão sequencial.
+
+Agent-Env Interface
+Temporal-Diff Learning (tipo de algoritmos): update estimates bansed on observed reward and state.
+
+	- Q-Learning: "ver" passos a frente, assumindo que será feita a escolha greedy mais a frente
+
+
+* optimal policy: aplicar um reinf learning algorithm para encontrar a ação que maximiza a função q para cada estado (q*(s,a) = max q(s,a) (recebe um estado e uma ação e retorna o retorno esperado de tomar tal ação em tal estado tendo em consideração a policy
+	- q learning: encontrar a optimal policy aprendendo os optimal q values para cada par (s,a).
+	* esse algoritmo aprende atualizando o valor de Q para cada (s,a) usando Bellman equation até que a função Q esteja  converter para o Q optimal. Essa estratégia iterativa se chama value iteration
+
+
+Num momento inicial os pares (s,a) começam com valor zero pois o agente não sabe nada sobre o ambiente. Cria-se então uma tabela State/Action (cue table), que guarda os valores de cada par (s,a)
+
+Deve existir um equilibrio entre exploration e exploitation: um precisa do outro e ambos são importantes.
+
+
+* a estratégia epsilon greedy funciona da seguinte maneira:
+	- primeiro e=1, pois é importante que haja exploration antes de haver exploitation. a medida que a tabela  vai sendo atualizada e o agente vai conhecendo o ambiente, o valor de epsilon vai decaindo gradativamente.
