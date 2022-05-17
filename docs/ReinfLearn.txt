@@ -26,4 +26,7 @@ Deve existir um equilibrio entre exploration e exploitation: um precisa do outro
 
 
 * a estratégia epsilon greedy funciona da seguinte maneira:
-	- primeiro e=1, pois é importante que haja exploration antes de haver exploitation. a medida que a tabela  vai sendo atualizada e o agente vai conhecendo o ambiente, o valor de epsilon vai decaindo gradativamente.
+	- primeiro e=1, pois é importante que haja exploration antes de haver exploitation. a medida que a tabela  vai sendo atualizada e o agente vai conhecendo o ambiente, o valor de epsilon vai decaindo gradativamente. O valor de epsilon decai com uma taxa estipulada previamente. A maneira que o algoritmo decide que "estratégia" utilizar a cada momento segue a lógica de obter um numero aleatorio entre 0 e 1 e compara-lo com epsilon. Se tal numero for menor, segue exploring; se for maior, faz exploitation. Dessa maneira, no inicio garantimos que o algoritmo foca em explorar e a medida que vai aprendendo, fica mais interessado em tirar proveito do que aprendeu (mais chance de encontrar valores aleatórios maiores que um epsilon pequenino).
+	
+	- a learning rate é um valor entre 0 e 1 que representa o quão rápido o agente "abandona" o valor Q encotrado previamente e guardado na tabela, para substituir pelo novo valor Q para um dado par (s,a).
+	- os steps são as iterações, e os episodes são os "caminhos". O agente pode ser forçado a terminar as iterações se o numero de steps atingir o tamanho do episode.
