@@ -44,7 +44,7 @@ class Game():
 
 
     def getReward(self):
-        if (len(self.__played) == len(self.__pieces) ): #if all pieces were played
+        if  len(self.__pieces) != 0 : 
 
             curr_num = self.__played[0].AttackNum(self.__board)
 
@@ -52,7 +52,7 @@ class Game():
                 num_attacks = piece.AttackNum( self.__board)
                 if ( curr_num != num_attacks):
                         return -10
-            return 20
+            return 20 + ( 10 * num_attacks)
 
         return 0
 
@@ -61,7 +61,6 @@ class Game():
         #se a action for um numero é o indice de possible moves
 
         self.__state += ( self.__state * action ) 
-
 
         pos = self.__possible_moves[action]
 
