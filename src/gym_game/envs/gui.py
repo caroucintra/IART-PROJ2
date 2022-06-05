@@ -1,4 +1,7 @@
 from re import A
+""" from gym_game.envs import game
+from gym_game.envs.piece import Bishop, Tower, Queen, Horse, King
+from gym_game.envs.game import Game """
 from piece import Bishop, Tower, Queen, Horse, King
 from game import Game
 import pygame
@@ -15,11 +18,13 @@ class GUI:
         pieces = ['H', 'H']
         self.game = Game( 3, [[0,2],[1,2], [1, 1], [2,1], [2,0]], pieces)
         pygame.init()
-        self.screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
+        self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
 
+    def getGame(self):
+        return self.game
 
     def action(self, action):
-        self.game.move(action)
+        return self.game.move(action)
 
     def state(self):
         return self.game.getState()
@@ -27,10 +32,12 @@ class GUI:
     def reward(self):
         return self.game.getReward()
 
-    #def done(self):
+    def done(self):
+        return self.game.done()
 
     def view(self):
-        self.drawBoard(self.game.getSize(), self.game.getPieces(), self.game.getSnake())
+        print("aqui")
+        self.drawBoard(self.game.getSize(), self.game.getPositionPlayed(), self.game.getSnake())
 
     def drawBoard(self, size, pieces, snake):
 
@@ -89,7 +96,7 @@ class GUI:
         pygame.draw.line(self._screen, self.DIV, [300,0], [300,self.SCREENHEIGHT], 3)
         pygame.draw.line(self._screen, self.DIV, [450,0], [450,self.SCREENHEIGHT], 3)
     
-    def draw3x43(self):
+    def draw3x3(self):
         """Function that draws the lines for a 5x5 board
         """
         pygame.draw.line(self._screen, self.DIV, [0,200], [self.SCREENWIDTH,200], 3)
@@ -125,8 +132,8 @@ class GUI:
                 sprites.add(Queen_sprite(space, v))
             elif isinstance(v,King):
                 sprites.add(King_sprite(space, v))
-            #else:
-             #   sprites.add(Horse_sprite(space, v))
+            else:
+                sprites.add(Horse_sprite(space, v))
         sprites.draw(self._screen)
 
     def setSnake(self, snake):
@@ -232,3 +239,9 @@ class King_sprite(Piece_sprite):
 
         self.rect.x = self._col*size
         self.rect.y = self._line*size
+
+
+
+game = GUI()
+while(True):
+    game.view()

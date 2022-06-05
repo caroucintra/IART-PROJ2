@@ -1,5 +1,3 @@
-from ast import Break
-from turtle import position
 from piece import King, Bishop, Tower, Queen, Horse
 import numpy as np
 
@@ -9,7 +7,7 @@ class Game():
 # pieces lista de letras
 
     def __init__(self, board_size , snake_pos, pieces):
-        self.__size = board_size;
+        self.__size = board_size
         self.__board = np.full([board_size, board_size], 0)
         self.__move = 0 # indice of piece being played
         self.__state = 0 # state of game
@@ -33,8 +31,8 @@ class Game():
         states = 1
         free_slots = 0
         for l in range (len(self.__board)):
-            for c in range (len(self.__board_size)):
-                if (self.__board == 0):
+            for c in range (len(self.__board)):
+                if (self.__board[l][c] == 0):
                     free_slots += 1
 
         states = 1 + pow(free_slots, len(self.__pieces) - 1)
@@ -56,17 +54,32 @@ class Game():
     def getSnake(self):
         return self.__snake
 
+    def getPositionPlayed(self):
+        return self.__played
+
+    
+
 
     def getReward(self):
-        if  len(self.__pieces) != 0 : 
+        
+        if (self.done()):
 
             curr_num = self.__played[0].AttackNum(self.__board)
 
             for piece in self.__played:
                 num_attacks = piece.AttackNum( self.__board)
                 if ( curr_num != num_attacks):
-                        return -10
+                        return -20
             return 20 + ( 10 * num_attacks)
+        
+        elif len(self.__played) != 1 : 
+            curr_num = self.__played[ self.__move - 2].AttackNum(self.__board)
+            num_attacks = self.__played[ self.__move - 1 ].AttackNum(self.__board)
+            
+            if (curr_num != num_attacks):
+                return -10
+            else:
+                return 15 + ( 5 * num_attacks)
 
         return 0
 
@@ -121,10 +134,15 @@ class Game():
                         print(" E ", end ="")
                     found = False
             print("\n")
+
+    def done(self):
+        if (len(self.__played) == len(self.__pieces)):
+            return True
+        return False
                     
                     
 
-        
+"""  
 
 pieces = ['H', 'H']
 game = Game( 3, [[0,2],[1,2], [1, 1], [2,1], [2,0]], pieces)
@@ -146,3 +164,4 @@ while(reward == 0):
 
 game.display()
 
+ """
