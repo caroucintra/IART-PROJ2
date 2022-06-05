@@ -13,9 +13,11 @@ class GUI:
     SCREENWIDTH = 600
     SCREENHEIGHT = 600
 
-    def __init__(self):
-        pieces = ['H', 'H']
-        self.game = Game( 3, [[0,2],[1,2], [1, 1], [2,1], [2,0]], pieces)
+    def __init__(self, board_size , snake_pos, pieces):
+        
+        #pieces = ['B', 'T']
+        #self.game = Game( 3, [[0,2], [1, 2], [2,2], [2,1], [2,0]], pieces)
+        self.game = Game(board_size, snake_pos, pieces)
         pygame.init()
         self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
 

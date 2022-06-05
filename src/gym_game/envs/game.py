@@ -27,15 +27,12 @@ class Game():
         self.__pieces = pieces 
 
     def calculatePossibleStates(self):
+        states = 0
+        for i in range(1,len(self.__pieces) ):
+            states += len(self.__possible_moves) ^ i
         
-        states = 1
-        free_slots = 0
-        for l in range (len(self.__board)):
-            for c in range (len(self.__board)):
-                if (self.__board[l][c] == 0):
-                    free_slots += 1
-
-        states = 1 + pow(free_slots, len(self.__pieces) - 1)
+        if (states == 0):
+            states = 1
 
         return states
     
@@ -69,7 +66,7 @@ class Game():
             for piece in self.__played:
                 num_attacks = piece.AttackNum( self.__board)
                 if ( curr_num != num_attacks):
-                        return -20
+                    return -30
             return 20 + ( 10 * num_attacks)
         
         elif len(self.__played) != 1 : 
@@ -77,17 +74,15 @@ class Game():
             num_attacks = self.__played[ self.__move - 1 ].AttackNum(self.__board)
             
             if (curr_num != num_attacks):
-                return -10
+                return -5
             else:
-                return 15 + ( 5 * num_attacks)
+                return 2 + ( 10 * num_attacks)
 
         return 0
 
 
     def move(self, action):
         #se a action for um numero é o indice de possible moves
-
-        self.__state = ( self.__state * action ) 
 
         pos = self.__possible_moves[action]
 
@@ -100,20 +95,35 @@ class Game():
         elif (piece == 'B'):
             piece_allocked = Bishop(pos[0], pos[1], len(self.__board)) 
         elif (piece == 'K'):
-            piece_allocked = King(pos[0], pos[1], len(self.__board)) 
+            piece_allocked = King(pos[0], pos[1], len(self.__board))
+        elif (piece == 'T'):
+            piece_allocked = Tower(pos[0], pos[1], len(self.__board))
 
         positions = []
-        for i in range(len(self.__played)):
-            pos_played = self.__played[i].getPos()
-            if (pos_played[0] == pos[0] and pos_played[1]== pos[1]):
-                return -20, self.__state
+        for piece in self.__played:
+            ocupied_pos = piece.getOcupiedPos()
+            ocupied_pos.append(pos)
+            piece.setAttack(ocupied_pos)
+            ocupied_pos = []
+            pos_played = piece.getPos()
             positions.append(pos_played)
 
-        piece_allocked.setAttack(self.__played)
-        self.__played.append(piece_allocked)
+        piece_allocked.setAttack(positions)
+        self.__played.append(piece_allocked) 
+
+        for pos_played in positions:
+            if (pos_played[0] == pos[0] and pos_played[1]== pos[1]):
+                return -40, self.__state, True
+
+        
+        if (not self.done()):
+            self.__state += ( action + 1 ) ^ self.__move
+
+        self.__move +=1
+
 
         #check if it is the end 
-        return self.getReward(), self.__state
+        return self.getReward(), self.__state, self.done()
 
 
     def display(self):

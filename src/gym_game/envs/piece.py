@@ -1,4 +1,5 @@
 from operator import truediv
+from turtle import pos
 import numpy as np
 
 
@@ -19,6 +20,9 @@ class Piece:
         self._col = col
         self._line = line
         self._board_size = board_size
+
+    def getOcupiedPos(self):
+        return self.__positions.copy()
     
     def setAttack(self, positions):
         """ Builds the bitmap corresponding to the piece's attacks
@@ -27,6 +31,7 @@ class Piece:
             positions (vector): vector with the positions of all the pieces in the board
         """
         self._bitmap = np.array([[0]*(self._board_size)]*(self._board_size))
+        self.__positions = positions
 
     def AttackNum(self, snake):
         """Evaluates how many times the piece attacks a snake
@@ -46,7 +51,7 @@ class Piece:
         return num
 
     def getPos(self):
-        return [self._line,self._col]
+        return [self._col,self._line]
     
     def getAttack(self):
         return self._bitmap
