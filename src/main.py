@@ -53,7 +53,7 @@ def simulate():
 
 if __name__ == "__main__":
     env = gym.make("Pygame-v0")
-    MAX_EPISODES = 9999
+    MAX_EPISODES = 90
     MAX_TRY = 1000
     epsilon = 1
     epsilon_decay = 0.999
@@ -63,6 +63,5 @@ if __name__ == "__main__":
     state_size = env.observation_space
     print(f'action size: {action_size}, state size: {state_size}')
     q_table = np.zeros((state_size, action_size))
-    env.reset()
-    env.render()
-    #simulate()
+    simulate()
+    print(q_table)

@@ -1,4 +1,4 @@
-from piece import King, Bishop, Tower, Queen, Horse
+from gym_game.envs.piece import King, Bishop, Tower, Queen, Horse
 import numpy as np
 
 

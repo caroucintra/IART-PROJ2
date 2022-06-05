@@ -1,11 +1,10 @@
 from re import A
-""" from gym_game.envs import game
+from gym_game.envs import game
 from gym_game.envs.piece import Bishop, Tower, Queen, Horse, King
-from gym_game.envs.game import Game """
-from piece import Bishop, Tower, Queen, Horse, King
-from game import Game
+from gym_game.envs.game import Game
 import pygame
 import pygame.freetype
+import time
 
 class GUI:
     BG = (0,0,0)
@@ -54,6 +53,7 @@ class GUI:
 
         self.setPieces(pieces)
         self.setSnake(snake)
+        pygame.display.update()
 
 
 
@@ -239,9 +239,3 @@ class King_sprite(Piece_sprite):
 
         self.rect.x = self._col*size
         self.rect.y = self._line*size
-
-
-
-game = GUI()
-while(True):
-    game.view()
