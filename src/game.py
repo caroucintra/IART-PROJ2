@@ -1,6 +1,6 @@
 from ast import Break
 from turtle import position
-from piece import King, Bishop, Tower, Queen, Horse, King
+from piece import King, Bishop, Tower, Queen, Horse
 import numpy as np
 
 
@@ -9,11 +9,13 @@ class Game():
 # pieces lista de letras
 
     def __init__(self, board_size , snake_pos, pieces):
+        self.__size = board_size;
         self.__board = np.full([board_size, board_size], 0)
         self.__move = 0 # indice of piece being played
         self.__state = 0 # state of game
         self.__played = [] # list pieces chosen
         self.__possible_moves = [] # free slots
+        self.__snake = snake_pos
 
         for pos in range(len(snake_pos)):
             self.__board[ snake_pos[pos][1]][snake_pos[pos][0]] = 1
@@ -41,6 +43,18 @@ class Game():
     
     def getPossibleMoves(self):
         return self.__possible_moves
+
+    def getSize(self):
+        return self.__size
+
+    def getState(self):
+        return self.__state
+
+    def getPieces(self):
+        return self.__pieces
+
+    def getSnake(self):
+        return self.__snake
 
 
     def getReward(self):
