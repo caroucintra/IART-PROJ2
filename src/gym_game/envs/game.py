@@ -87,7 +87,7 @@ class Game():
     def move(self, action):
         #se a action for um numero é o indice de possible moves
 
-        self.__state += ( self.__state * action ) 
+        self.__state = ( self.__state * action ) 
 
         pos = self.__possible_moves[action]
 
