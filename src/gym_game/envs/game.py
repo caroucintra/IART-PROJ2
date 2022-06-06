@@ -15,9 +15,11 @@ class Game():
         self.__possible_moves = [] # free slots
         self.__snake = snake_pos
 
+        #setting up the board
         for pos in range(len(snake_pos)):
             self.__board[ snake_pos[pos][1]][snake_pos[pos][0]] = 1
 
+        #setting free slots in possible moves
         for l in range (board_size):
             for c in range (board_size):
                 if ( self.__board[l][c] == 0):
@@ -60,6 +62,7 @@ class Game():
 
     def getReward(self):
         
+        
         if (self.done()):
 
             curr_num = self.__played[0].AttackNum(self.__board)
@@ -72,6 +75,7 @@ class Game():
                 print(piece.getPos())
             return 50 + ( 10 * num_attacks)
         
+        # if it is not the end of the game compare the number of attacks with the last piece
         elif len(self.__played) != 1 : 
             curr_num = self.__played[ self.__move - 2].AttackNum(self.__board)
             num_attacks = self.__played[ self.__move - 1 ].AttackNum(self.__board)
@@ -85,10 +89,9 @@ class Game():
 
 
     def move(self, action):
-        #se a action for um numero é o indice de possible moves
 
         pos = self.__possible_moves[action]
-
+        #getting the name of the piece that will be placed 
         piece = self.__pieces[self.__move]
 
         if (piece == 'H'):
@@ -103,6 +106,7 @@ class Game():
             piece_allocked = Tower(pos[0], pos[1], len(self.__board))
 
         positions = []
+        #updating ocupied positions in previous allocated pieces
         for piece in self.__played:
             ocupied_pos = piece.getOcupiedPos()
             ocupied_pos.append(pos)
@@ -118,7 +122,7 @@ class Game():
             self.__state = len (self.__possible_moves) * self.__state + ( action + 1)
 
         self.__move +=1
-
+        #checks if the piece is places in an occupied spot
         for pos_played in positions:
             if (pos_played[0] == pos[0] and pos_played[1]== pos[1]):
                 return -100, self.__state, True
@@ -127,7 +131,7 @@ class Game():
         #check if it is the end 
         return self.getReward(), self.__state, self.done()
 
-
+    #check if the game is over
     def done(self):
         if (len(self.__played) == len(self.__pieces)):
             return True
