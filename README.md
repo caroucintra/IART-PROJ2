@@ -6,7 +6,8 @@ In order to play our version of Chess Snake Puzzles, it is needed to have Python
 <ol>
 <li> In a command shell, go to the directory of this project</li>
 <li> Run python3 &lt;path to the project/src/main.py&gt; </li>
-<li> A new tab with the user interface of the game will open, and all the instructions you need to play it are in "Rules"</li>
+<li> After running, the stats of each episode is printed on the shell </li>
+<li> By the end of the iterations, the graph with the final conclusions of the algorithm's progress and the Pygame interface will appear with the final solution for the board</li>
 </ol>
 
 Developed by:
