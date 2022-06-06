@@ -4,7 +4,6 @@ import numpy as np
 from gym_game.envs.gui import GUI
 
 
-
 class Environment(gym.Env):
     def __init__(self, **kwargs):
         self.size = kwargs['size']
@@ -25,7 +24,6 @@ class Environment(gym.Env):
         del self.gui
         self.gui = GUI(self.size, self.snake, self.pieces)
         state = self.gui.state()
-        print("STATE ", state)
         return state
 
 

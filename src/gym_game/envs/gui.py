@@ -15,8 +15,7 @@ class GUI:
     SCREENHEIGHT = 600
 
     def __init__(self, board_size , snake_pos, pieces):
-        #pieces = ['B', 'T']
-        #self.game = Game( 3, [[0,2], [1, 2], [2,2], [2,1], [2,0]], pieces)
+        
         self.game = Game(board_size, snake_pos, pieces)
 
     def getGame(self):
@@ -248,3 +247,6 @@ class King_sprite(Piece_sprite):
 
         self.rect.x = self._col*size
         self.rect.y = self._line*size
+
+    def printPieceList(self):
+        print(self.game.getPositionPlayed())

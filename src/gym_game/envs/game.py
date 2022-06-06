@@ -27,17 +27,18 @@ class Game():
         self.__pieces = pieces 
 
     def calculatePossibleStates(self):
+
         states = 0
-        for i in range(1,len(self.__pieces) ):
-            states += len(self.__possible_moves) ^ i
+        for i in range(len(self.__pieces)  ):
+            states += len(self.__possible_moves) ** i 
         
         if (states == 0):
             states = 1
 
-        return states
+        return states 
     
     def getPossibleMoves(self):
-        return self.__possible_moves
+        return self.__possible_moves 
 
     def getSize(self):
         return self.__size
@@ -66,8 +67,8 @@ class Game():
             for piece in self.__played:
                 num_attacks = piece.AttackNum( self.__board)
                 if ( curr_num != num_attacks):
-                    return -30
-            return 20 + ( 10 * num_attacks)
+                    return -20
+            return 50 + ( 10 * num_attacks)
         
         elif len(self.__played) != 1 : 
             curr_num = self.__played[ self.__move - 2].AttackNum(self.__board)
@@ -76,7 +77,7 @@ class Game():
             if (curr_num != num_attacks):
                 return -5
             else:
-                return 2 + ( 10 * num_attacks)
+                return 2 + ( 5 * num_attacks)
 
         return 0
 
@@ -111,67 +112,22 @@ class Game():
         piece_allocked.setAttack(positions)
         self.__played.append(piece_allocked) 
 
-        for pos_played in positions:
-            if (pos_played[0] == pos[0] and pos_played[1]== pos[1]):
-                return -40, self.__state, True
-
-        
         if (not self.done()):
-            self.__state += ( action + 1 ) ^ self.__move
+            self.__state = len (self.__possible_moves) * self.__state + ( action + 1)
 
         self.__move +=1
 
+        for pos_played in positions:
+            if (pos_played[0] == pos[0] and pos_played[1]== pos[1]):
+                return -100, self.__state, True
+        
 
         #check if it is the end 
         return self.getReward(), self.__state, self.done()
 
-
-    def display(self):
-        board_size = len(self.__board)
-
-        found = False
-        for l in range (board_size):
-            for c in range (board_size):
-                if (self.__board[l][c] == 1):
-                    print(" 1 ", end ="")
-                else:
-                    for piece in self.__played:
-                        if piece.getPos()[0] == c and piece.getPos()[1] == l:
-                            found = True
-                            print(" H ", end ="")
-                            break
-                    if(not found):
-                        print(" E ", end ="")
-                    found = False
-            print("\n")
 
     def done(self):
         if (len(self.__played) == len(self.__pieces)):
             return True
         return False
                     
-                    
-
-"""  
-
-pieces = ['H', 'H']
-game = Game( 3, [[0,2],[1,2], [1, 1], [2,1], [2,0]], pieces)
-
-reward = 0
-i = 0
-while(reward == 0):
-    game.display()
-
-
-    for action in game.getPossibleMoves():
-        print(action)
-
-    col = input("Enter your action: ")
-    
-    reward, state = game.move(int(col))
-    i+=1
-    print("reward ", reward)
-
-game.display()
-
- """
