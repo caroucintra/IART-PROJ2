@@ -57,9 +57,15 @@ def simulate():
             epsilon *= epsilon_decay
     print(q_table)
 
+def choose_random_puzzle():
+    puzzles = {
+        "puzzle1":  
+    }
+
 
 if __name__ == "__main__":
-    env = gym.make("Pygame-v0")
+    puzzle_size, puzzle_snake, puzzle_pieces = choose_random_puzzle()
+    env = gym.make("Pygame-v0", size = 4, snake = [[0,3],[0,2], [1, 2], [2,2], [2,1], [2,0],[3,0]], pieces = ['H','H','H'])
 
     MAX_EPISODES = 40000
     MAX_TRY = 1000
@@ -70,7 +76,8 @@ if __name__ == "__main__":
     action_size = env.action_space.n
     state_size = env.observation_space
     print(f'action size: {action_size}, state size: {state_size}')
-    q_table = np.zeros((state_size, action_size))
+    q_table = np.zeros((state_size, action
+    _size))
     simulate()
     env.reset()
 
@@ -93,6 +100,7 @@ if __name__ == "__main__":
             
             if done:
                 break
-        env.render()
-        time.sleep(5)
+        #time.sleep(5)
+
+    env.render()
     env.close()

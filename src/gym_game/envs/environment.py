@@ -6,11 +6,11 @@ from gym_game.envs.gui import GUI
 
 
 class Environment(gym.Env):
-
-
-    def __init__(self):
-        pieces = ['Q', 'Q','Q']
-        self.gui = GUI(4, [[0,3],[0,2], [1, 2], [2,2], [2,1], [2,0],[3,0]], pieces)
+    def __init__(self, **kwargs):
+        self.size = kwargs['size']
+        self.pieces = kwargs['pieces']
+        self.snake = kwargs['snake']
+        self.gui = GUI(self.size, self.snake, self.pieces)
         self.game = self.gui.getGame()
         self.action_space = spaces.Discrete( len(self.game.getPossibleMoves()) )
         self.observation_space = self.game.calculatePossibleStates()
@@ -22,9 +22,8 @@ class Environment(gym.Env):
 
     
     def reset(self):
-        pieces = ['H', 'H','H']
         del self.gui
-        self.gui = GUI(4, [[0,3],[0,2], [1, 2], [2,2], [2,1], [2,0],[3,0]], pieces)
+        self.gui = GUI(self.size, self.snake, self.pieces)
         state = self.gui.state()
         print("STATE ", state)
         return state
@@ -32,5 +31,4 @@ class Environment(gym.Env):
 
     def render(self, mode='human', close=False):
         self.gui.view()
-
 

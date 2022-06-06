@@ -1,4 +1,5 @@
 from re import A
+from unittest import result
 from gym_game.envs import game
 from gym_game.envs.piece import Bishop, Tower, Queen, Horse, King
 from gym_game.envs.game import Game
@@ -14,12 +15,9 @@ class GUI:
     SCREENHEIGHT = 600
 
     def __init__(self, board_size , snake_pos, pieces):
-        
         #pieces = ['B', 'T']
         #self.game = Game( 3, [[0,2], [1, 2], [2,2], [2,1], [2,0]], pieces)
         self.game = Game(board_size, snake_pos, pieces)
-        pygame.init()
-        self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
 
     def getGame(self):
         return self.game
@@ -37,25 +35,34 @@ class GUI:
         return self.game.done()
 
     def view(self):
+        pygame.init()
+        self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
         print("aqui")
         self.drawBoard(self.game.getSize(), self.game.getPositionPlayed(), self.game.getSnake())
 
     def drawBoard(self, size, pieces, snake):
+        result = True
+        while(result):
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    result = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        result = False
+            self._screen.fill(self.BG)
+            self.size = size
+            if size == 6:
+                self.draw6x6()
+            elif size == 5:
+                self.draw5x5()
+            elif size == 4:
+                self.draw4x4()
+            else:
+                self.draw3x3()
 
-        self._screen.fill(self.BG)
-        self.size = size
-        if size == 6:
-            self.draw6x6()
-        elif size == 5:
-            self.draw5x5()
-        elif size == 4:
-            self.draw4x4()
-        else:
-            self.draw3x3()
-
-        self.setPieces(pieces)
-        self.setSnake(snake)
-        pygame.display.update()
+            self.setPieces(pieces)
+            self.setSnake(snake)
+            pygame.display.update()
 
 
 
