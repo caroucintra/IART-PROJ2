@@ -68,6 +68,8 @@ class Game():
                 num_attacks = piece.AttackNum( self.__board)
                 if ( curr_num != num_attacks):
                     return -20
+            for piece in self.__played:
+                print(piece.getPos())
             return 50 + ( 10 * num_attacks)
         
         elif len(self.__played) != 1 : 

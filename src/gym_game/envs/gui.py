@@ -36,7 +36,6 @@ class GUI:
     def view(self):
         pygame.init()
         self._screen = pygame.display.set_mode((self.SCREENWIDTH,self.SCREENHEIGHT))
-        print("aqui")
         self.drawBoard(self.game.getSize(), self.game.getPositionPlayed(), self.game.getSnake())
 
     def drawBoard(self, size, pieces, snake):
@@ -250,3 +249,4 @@ class King_sprite(Piece_sprite):
 
     def printPieceList(self):
         print(self.game.getPositionPlayed())
+        

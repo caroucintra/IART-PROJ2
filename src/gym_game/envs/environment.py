@@ -25,6 +25,9 @@ class Environment(gym.Env):
         self.gui = GUI(self.size, self.snake, self.pieces)
         state = self.gui.state()
         return state
+    
+    def print(self):
+        self.gui.printPieceList()
 
 
     def render(self, mode='human', close=False):

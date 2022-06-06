@@ -94,7 +94,6 @@ def simulateQLearning( ):
             # Do action and get result
             #action = 8
             next_state, reward, done, _ = env.step(action)
-            print(next_state, reward, done)
             total_reward += reward
 
             # Get correspond q value from state, action pair
