@@ -182,7 +182,6 @@ if __name__ == "__main__":
         state = new_state
         print(reward)
         env.render()
-        env.printPieceList()
 
     env.render()
     
