@@ -59,13 +59,16 @@ def simulate():
 
 def choose_random_puzzle():
     puzzles = {
-        "puzzle1":  
+        "puzzle1": [4, [[0,3],[0,2], [1, 2], [2,2], [2,1], [2,0],[3,0]], ['H','H','H']]
     }
+
+
+    return puzzles['puzzle1'][0], puzzles['puzzle1'][1], puzzles['puzzle1'][2] 
 
 
 if __name__ == "__main__":
     puzzle_size, puzzle_snake, puzzle_pieces = choose_random_puzzle()
-    env = gym.make("Pygame-v0", size = 4, snake = [[0,3],[0,2], [1, 2], [2,2], [2,1], [2,0],[3,0]], pieces = ['H','H','H'])
+    env = gym.make("Pygame-v0", size = puzzle_size, snake = puzzle_snake, pieces = puzzle_pieces)
 
     MAX_EPISODES = 40000
     MAX_TRY = 1000
@@ -76,8 +79,7 @@ if __name__ == "__main__":
     action_size = env.action_space.n
     state_size = env.observation_space
     print(f'action size: {action_size}, state size: {state_size}')
-    q_table = np.zeros((state_size, action
-    _size))
+    q_table = np.zeros((state_size, action_size))
     simulate()
     env.reset()
 
