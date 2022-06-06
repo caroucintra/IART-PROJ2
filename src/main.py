@@ -150,7 +150,7 @@ if __name__ == "__main__":
     puzzle_size, puzzle_snake, puzzle_pieces = choose_random_puzzle()
     env = gym.make("Pygame-v0", size = puzzle_size, snake = puzzle_snake, pieces = puzzle_pieces)
 
-    MAX_EPISODES = 80000
+    MAX_EPISODES = 1000
     MAX_TRY = 10
     epsilon = 1
     epsilon_decay = 0.9999
